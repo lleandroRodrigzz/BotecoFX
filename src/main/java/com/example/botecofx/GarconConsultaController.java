@@ -13,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -67,6 +68,7 @@ public class GarconConsultaController implements Initializable {
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setScene(scene);
+            stage.initStyle(StageStyle.UNDECORATED);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
             garcon=null;
@@ -81,13 +83,12 @@ public class GarconConsultaController implements Initializable {
             Garcon garcon = tabela.getSelectionModel().getSelectedItem();
             Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText("Deseja excluir o garçon "+garcon.getNome());
-            if(alert.showAndWait().get()== ButtonType.OK)
+            if(alert.showAndWait().get() == ButtonType.OK)
             {
                 garconDAL.apagar(garcon);
                 onFiltro(null);
             }
         }
-
     }
 
     @FXML
@@ -108,10 +109,9 @@ public class GarconConsultaController implements Initializable {
         Stage stage=new Stage();
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.showAndWait();
         tfFiltro.setText("");
         preencherTabela("");
     }
-
-
 }

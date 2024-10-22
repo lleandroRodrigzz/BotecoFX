@@ -12,6 +12,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.json.JSONObject;
 
 import java.net.URL;
@@ -72,7 +74,7 @@ public class GarconFormController implements Initializable {
 
     @FXML
     void onCancelar(ActionEvent event) {
-        btConfirmar.getScene().getWindow().hide();
+        btCancelar.getScene().getWindow().hide();
     }
 
     @FXML
@@ -84,8 +86,7 @@ public class GarconFormController implements Initializable {
         if(!new GarconDAL().gravar(garcon))
         {
             Alert alert=new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Erro ao gravar o garçon"+
-                    SingletonDB.getConexao().getMensagemErro());
+            alert.setContentText("Erro ao gravar o garçon: "+ SingletonDB.getConexao().getMensagemErro());
             alert.showAndWait();
         }
         btConfirmar.getScene().getWindow().hide();
