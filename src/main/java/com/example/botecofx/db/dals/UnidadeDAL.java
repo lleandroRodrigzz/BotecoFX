@@ -1,6 +1,5 @@
 package com.example.botecofx.db.dals;
 
-import com.example.botecofx.db.entidades.Categoria;
 import com.example.botecofx.db.entidades.Unidade;
 import com.example.botecofx.db.util.IDAL;
 import com.example.botecofx.db.util.SingletonDB;

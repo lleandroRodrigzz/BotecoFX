@@ -2,9 +2,11 @@ module com.example.botecofx {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
-    requires java.desktop;
     requires java.logging;
     requires org.json;
+    requires java.desktop;
+    requires javafx.swing;
+    requires ij;
 
 
     opens com.example.botecofx to javafx.fxml;

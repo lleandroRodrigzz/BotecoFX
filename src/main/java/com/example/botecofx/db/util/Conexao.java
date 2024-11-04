@@ -1,10 +1,12 @@
 package com.example.botecofx.db.util;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.sql.*;
 
 public class Conexao 
 {
@@ -14,9 +16,11 @@ public class Conexao
     {   erro="";
         connect=null;
     }
+
     public Connection getConnect() {
         return connect;
     }
+
     public boolean conectar(String local,String banco,String usuario,String senha)
     {   boolean conectado=false;
         try {
@@ -31,12 +35,15 @@ public class Conexao
         { erro="Outro erro: " + ex.toString(); }
         return conectado;
     }
+
     public String getMensagemErro() {
         return erro;
     }
+
     public boolean getEstadoConexao() {
         return (connect!=null);
     }
+
     public boolean manipular(String sql) // inserir, alterar,excluir
     {   boolean executou=false;
         try {
@@ -51,6 +58,7 @@ public class Conexao
         }
         return executou;
     }
+
     public ResultSet consultar(String sql)
     {   ResultSet rs=null;
         try {
@@ -66,6 +74,7 @@ public class Conexao
         }
         return rs;
     }
+
     public int getMaxPK(String tabela,String chave) 
     {
         String sql="select max("+chave+") from "+tabela;
@@ -82,5 +91,37 @@ public class Conexao
              max = -1;
         }
         return max;
+    }
+
+    public boolean gravarImagem(File file, String tabela, String coluna_foto, String coluna_id, int id){
+        try{
+            String sql = "UPDATE "+tabela+" SET "+coluna_foto+"=? WHERE "+coluna_id+"="+id;
+            FileInputStream fileInputStream = new FileInputStream(file);
+            PreparedStatement ps = connect.prepareStatement(sql);
+            ps.setBinaryStream(1,fileInputStream);
+            ps.executeUpdate();
+            ps.close();
+            fileInputStream.close();
+            return true;
+        }catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public BufferedImage carregarImagem(String tabela, String coluna_foto, String coluna_id, int id){
+        BufferedImage bufferedImage = null;
+        try{
+            String sql = "SELECT "+coluna_foto+" FROM "+tabela+" WHERE "+coluna_id+"= "+id;
+            Statement statement = connect.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            if(resultSet.next()){
+                byte[] bytes = resultSet.getBytes(1);
+                InputStream inputStream = new ByteArrayInputStream(bytes);
+                bufferedImage = ImageIO.read(inputStream);
+            }
+            statement.close();
+        }catch (Exception e){e.printStackTrace();}
+        return bufferedImage;
     }
 }
