@@ -93,17 +93,18 @@ public class Conexao
         return max;
     }
 
-    public boolean gravarImagem(File file, String tabela, String coluna_foto, String coluna_id, int id){
-        try{
+    public boolean gravarImagem(File file, String tabela, String coluna_foto, String coluna_id, int id)
+    {
+        try {
             String sql = "UPDATE "+tabela+" SET "+coluna_foto+"=? WHERE "+coluna_id+"="+id;
             FileInputStream fileInputStream = new FileInputStream(file);
             PreparedStatement ps = connect.prepareStatement(sql);
-            ps.setBinaryStream(1,fileInputStream);
+            ps.setBinaryStream(1, fileInputStream);
             ps.executeUpdate();
             ps.close();
             fileInputStream.close();
             return true;
-        }catch (Exception e) {
+        }catch (Exception e){
             e.printStackTrace();
             return false;
         }
@@ -111,13 +112,13 @@ public class Conexao
 
     public BufferedImage carregarImagem(String tabela, String coluna_foto, String coluna_id, int id){
         BufferedImage bufferedImage = null;
-        try{
-            String sql = "SELECT "+coluna_foto+" FROM "+tabela+" WHERE "+coluna_id+"= "+id;
+        try {
+            String sql = "SELECT " + coluna_foto + " FROM " + tabela + " WHERE " + coluna_id + "=" + id;
             Statement statement = connect.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 byte[] bytes = resultSet.getBytes(1);
-                InputStream inputStream = new ByteArrayInputStream(bytes);
+                InputStream inputStream =  new ByteArrayInputStream(bytes);
                 bufferedImage = ImageIO.read(inputStream);
             }
             statement.close();

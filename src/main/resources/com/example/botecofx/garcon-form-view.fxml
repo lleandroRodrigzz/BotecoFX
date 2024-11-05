@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane hgap="20.0" prefHeight="622.0" prefWidth="781.0" style="-fx-border-color: black; -fx-background-color: orange;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.botecofx.GarconFormController">
+<GridPane hgap="20.0" prefHeight="556.0" prefWidth="768.0" style="-fx-border-color: black; -fx-background-color: orange;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.botecofx.GarconFormController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="25.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="25.0" />
@@ -115,7 +115,7 @@
       <VBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="324.0" prefHeight="63.0" prefWidth="152.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="5" />
       <HBox alignment="CENTER" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" spacing="48.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="6">
          <children>
-            <Button fx:id="btConfirmar" mnemonicParsing="false" onAction="#onConfimar" prefWidth="120.0" style="-fx-background-color: green; -fx-border-color: black;" text="Confirmar" textFill="WHITE">
+            <Button fx:id="btConfirmar" mnemonicParsing="false" onAction="#onConfimar" prefWidth="120.0" style="-fx-background-color: #2e4a29; -fx-border-color: black;" text="Confirmar" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Button>

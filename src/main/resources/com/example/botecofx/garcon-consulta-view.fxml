@@ -16,7 +16,7 @@
       <HBox alignment="CENTER" prefHeight="48.0" prefWidth="800.0" spacing="20.0" style="-fx-background-color: orange; -fx-border-color: black;">
          <children>
             <TextField fx:id="tfFiltro" onKeyReleased="#onFiltro" prefHeight="25.0" prefWidth="621.0" promptText="Informe um filtro de busca" style="-fx-border-color: black;" />
-            <Button mnemonicParsing="false" onAction="#onNovo" style="-fx-background-color: blue; -fx-border-color: black;" text="Novo" textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#onNovo" style="-fx-background-color: #2e4a29; -fx-border-color: black;" text="Novo" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Button>
@@ -30,7 +30,7 @@
             </Button>
          </children>
       </HBox>
-      <TableView fx:id="tabela" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black;" VBox.vgrow="ALWAYS">
+      <TableView fx:id="tabela" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black; -fx-background-color: black;" VBox.vgrow="ALWAYS">
         <columns>
           <TableColumn fx:id="colID" maxWidth="40.0" prefWidth="40.0" text="ID" />
           <TableColumn fx:id="colNome" prefWidth="75.0" text="NOME" />

@@ -10,12 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GarconDAL implements IDAL<Garcon> {
-
     public boolean gravar(Garcon entidade, File foto) {
-        String sql = """
-                INSERT INTO public.garcon(
-                	gar_nome, gar_cpf, gar_cep, gar_endereco, gar_cidade, gar_uf, gar_fone, gar_foto, gar_numero)
-                	VALUES ('#1', '#2', '#3', '#4', '#5', '#6', '#7', NULL, '#8');
+        String sql= """
+                INSERT INTO public.garcon(gar_nome, gar_cpf, gar_cep, gar_endereco, gar_cidade, gar_uf, gar_fone, gar_numero)
+                VALUES ('#1','#2','#3','#4','#5','#6','#7','#8');
                 """;
         sql=sql.replace("#1",entidade.getNome());
         sql=sql.replace("#2",entidade.getCpf());
@@ -25,9 +23,10 @@ public class GarconDAL implements IDAL<Garcon> {
         sql=sql.replace("#6",entidade.getUf());
         sql=sql.replace("#7",entidade.getFone());
         sql=sql.replace("#8",entidade.getNumero());
-        if(SingletonDB.getConexao().manipular(sql)){
-            if(foto != null){
-                int id = SingletonDB.getConexao().getMaxPK("garcon","gar_id");
+        if(SingletonDB.getConexao().manipular(sql));
+        {
+            if (foto!=null)
+            {  int id=SingletonDB.getConexao().getMaxPK("garcon","gar_id");
                 if(SingletonDB.getConexao().gravarImagem(foto,"garcon","gar_foto","gar_id",id))
                     return true;
             }

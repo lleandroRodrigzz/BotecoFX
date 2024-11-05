@@ -40,6 +40,7 @@ public class GarconConsultaController implements Initializable {
     private TextField tfFiltro;
 
     private GarconDAL garconDAL;
+
     public static Garcon garcon=null;
 
     @Override
@@ -68,8 +69,8 @@ public class GarconConsultaController implements Initializable {
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setScene(scene);
-            stage.initStyle(StageStyle.UNDECORATED);
             stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
             stage.showAndWait();
             garcon=null;
             tfFiltro.setText("");
@@ -83,7 +84,7 @@ public class GarconConsultaController implements Initializable {
             Garcon garcon = tabela.getSelectionModel().getSelectedItem();
             Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText("Deseja excluir o garçon "+garcon.getNome());
-            if(alert.showAndWait().get() == ButtonType.OK)
+            if(alert.showAndWait().get()== ButtonType.OK)
             {
                 garconDAL.apagar(garcon);
                 onFiltro(null);

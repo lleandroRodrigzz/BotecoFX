@@ -17,15 +17,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import org.json.JSONObject;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ResourceBundle;
 
 public class GarconFormController implements Initializable {
@@ -63,7 +59,7 @@ public class GarconFormController implements Initializable {
     @FXML
     private TextField tfUF;
 
-    File file = null;
+    File file=null;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -77,14 +73,15 @@ public class GarconFormController implements Initializable {
         MaskFieldUtil.cepField(tfCEP);
         MaskFieldUtil.foneField(tfFone);
         // se for uma alteração
-        if(GarconConsultaController.garcon!=null) {
+        if(GarconConsultaController.garcon != null)
+        {
             Garcon aux=GarconConsultaController.garcon;
             // preencher os dados do garçon
             tfNome.setText(aux.getNome());
             //colocar foto na interface
             BufferedImage bufferedImage;
-            bufferedImage = SingletonDB.getConexao().carregarImagem("garcon","gar_foto","gar_id",4); //quatro é provisório
-            imageView.setImage(SwingFXUtils.toFXImage(bufferedImage, null));
+            bufferedImage=SingletonDB.getConexao().carregarImagem("garcon","gar_foto","gar_id",4);
+            imageView.setImage(SwingFXUtils.toFXImage(bufferedImage,null));
         }
     }
 
@@ -102,7 +99,8 @@ public class GarconFormController implements Initializable {
         if(!new GarconDAL().gravar(garcon,file))
         {
             Alert alert=new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Erro ao gravar o garçon: "+ SingletonDB.getConexao().getMensagemErro());
+            alert.setContentText("Erro ao gravar o garçon"+
+                    SingletonDB.getConexao().getMensagemErro());
             alert.showAndWait();
         }
         btConfirmar.getScene().getWindow().hide();
@@ -120,10 +118,10 @@ public class GarconFormController implements Initializable {
     }
 
     public void onBuscarImagem(MouseEvent mouseEvent) {
-        FileChooser fileChooser = new FileChooser();
-        File file = fileChooser.showOpenDialog(null);
-        if(file != null){
-            Image image = new Image(file.toURI().toString());
+        FileChooser fileChooser=new FileChooser();
+        file=fileChooser.showOpenDialog(null);
+        if (file!=null){
+            Image image=new Image(file.toURI().toString());
             imageView.setImage(image);
         }
     }
