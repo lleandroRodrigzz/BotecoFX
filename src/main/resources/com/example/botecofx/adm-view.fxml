@@ -14,7 +14,7 @@
         <menus>
           <Menu text="_CADASTROS">
             <items>
-              <MenuItem text="_PRODUTO" />
+              <MenuItem onAction="#onCadProduto" text="_PRODUTO..." />
                   <MenuItem onAction="#onCadCategoria" text="_CATEGORIA..." />
                   <MenuItem onAction="#onCadUnidade" text="_UNIDADE..." />
                   <MenuItem text="_TIPO DE PAGAMENTO" />

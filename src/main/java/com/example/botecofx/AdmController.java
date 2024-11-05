@@ -49,6 +49,16 @@ public class AdmController implements Initializable {
         stage.showAndWait();
     }
 
+    public void onCadProduto(ActionEvent event) throws Exception{
+        FXMLLoader fxmlLoader = new FXMLLoader(BotecoFX.class.getResource("produto-consulta-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage=new Stage();
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.showAndWait();
+    }
+
     public void onFecharAPP(ActionEvent actionEvent) {
         Platform.exit();
     }
