@@ -63,7 +63,7 @@ public class ComandaFormController {
 
     @FXML
     void onCancelar(ActionEvent event) {
-
+        btPruduto.getScene().getWindow().hide();
     }
 
     @FXML
