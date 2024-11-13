@@ -20,12 +20,15 @@
                   <MenuItem text="_TIPO DE PAGAMENTO" />
                   <MenuItem onAction="#onCadGarcon" text="_GARÇON..." />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem onAction="#onFecharAPP" text="_FECHAR BotecoFX" />
+                  <MenuItem onAction="#onFecharADM" text="_FECHAR BotecoFX" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="_RELATORIOS">
             <items>
-              <MenuItem text="_LISTA DE PREÇOS" />
+              <MenuItem onAction="#onRelListaProdutos" text="_LISTA DE PRODUTOS" />
+                  <MenuItem onAction="#onRelListaPreco" text="_LISTA DE PREÇOS" />
+                  <MenuItem text="_LISTA DE GARÇONS COM FILTRO PARA CIDADE" />
+                  <MenuItem text="_COMANDA" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="_SISTEMA">

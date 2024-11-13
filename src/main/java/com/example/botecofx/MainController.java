@@ -1,5 +1,6 @@
 package com.example.botecofx;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,8 +14,8 @@ public class MainController {
     public void onAcessar(ActionEvent event) throws Exception{
         String view = "";
 
-        if(pfSenha.getText().equals("adm")){
-            //usuario adm
+        if (pfSenha.getText().equals("adm") || pfSenha.getText().equals("ADM")) {
+            // usuario adm
             view = "adm-view.fxml";
         }
 
@@ -30,6 +31,12 @@ public class MainController {
         stage.setMaximized(true);
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
+        pfSenha.setText("");
         stage.showAndWait();
+    }
+
+    public void onEncerrarBotecoFX(ActionEvent event) {
+        Platform.exit();
+        //fecha toda aplicação java
     }
 }
