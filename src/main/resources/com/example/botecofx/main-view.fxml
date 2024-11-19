@@ -12,11 +12,6 @@
    <children>
       <HBox alignment="CENTER_RIGHT" prefHeight="58.0" prefWidth="478.0" spacing="5.0">
          <children>
-            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="14.0" prefWidth="10.0" style="-fx-background-color: gray; -fx-border-color: black; -fx-border-width: 3;" text="_" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Button>
             <Button alignment="CENTER" mnemonicParsing="false" onAction="#onEncerrarBotecoFX" prefHeight="14.0" prefWidth="10.0" style="-fx-background-color: red; -fx-border-color: black; -fx-border-width: 3;" text="X" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />

@@ -5,6 +5,7 @@ import com.example.botecofx.db.entidades.Comanda;
 import com.example.botecofx.db.entidades.Garcon;
 import com.example.botecofx.db.entidades.Produto;
 import com.example.botecofx.db.entidades.TipoPagamento;
+import com.example.botecofx.db.util.SingletonDB;
 import com.example.botecofx.util.ModalTable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +14,13 @@ import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ComandaFormController {
     @FXML
@@ -78,7 +86,11 @@ public class ComandaFormController {
 
     @FXML
     void onImprimirComanda(ActionEvent event) {
-
+        int comanda_id = ComandaController.id;
+        comanda_id = 6; //tira isso dps
+        HashMap hashMap = new HashMap();
+        hashMap.put("comanda_id",comanda_id);
+        gerarRelatorioSubReport("reports/comanda_print.jasper","Comanda",hashMap);
     }
 
     @FXML
@@ -94,5 +106,22 @@ public class ComandaFormController {
         stage.showAndWait();
         p = (Produto) modalTable.getSelecionado();
         btPruduto.setText(p.toString());
+    }
+
+    private void gerarRelatorioSubReport(String relat, String titulotela, Map parametros)
+    {
+        try {
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(relat, parametros,
+                    SingletonDB.getConexao().getConnect());
+            JasperViewer viewer = new JasperViewer(jasperPrint,false);
+
+            viewer.setExtendedState(JasperViewer.MAXIMIZED_BOTH);//maximizado
+            viewer.setTitle(titulotela);
+            viewer.setVisible(true);
+        }
+        catch (JRException erro) {
+            System.out.println(erro);
+        }
     }
 }

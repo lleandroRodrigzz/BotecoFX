@@ -13,7 +13,7 @@ public class ComandaController {
     public AnchorPane anchorPane;
     public Label lbNumComanda;
     public Label lbValor;
-    private int id;
+    public static int id;
 
     public void onGerenciarComanda(MouseEvent mouseEvent) throws Exception{
         FXMLLoader fxmlLoader = new FXMLLoader(BotecoFX.class.getResource("comanda-form-view.fxml"));

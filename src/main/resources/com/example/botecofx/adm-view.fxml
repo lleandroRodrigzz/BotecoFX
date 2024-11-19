@@ -33,14 +33,14 @@
           </Menu>
           <Menu mnemonicParsing="false" text="_SISTEMA">
             <items>
-              <MenuItem text="_BACKUP" />
-                  <MenuItem text="_RESTORE" />
+              <MenuItem onAction="#onBackup" text="_BACKUP" />
+                  <MenuItem onAction="#onRestore" text="_RESTORE" />
             </items>
           </Menu>
             <Menu text="_AJUDA">
                <items>
-                  <MenuItem mnemonicParsing="false" text="SOBRE" />
-                  <MenuItem mnemonicParsing="false" text="AJUDA DO SISTEMA BOTECOFX" />
+                  <MenuItem mnemonicParsing="false" onAction="#onSobre" text="SOBRE" />
+                  <MenuItem mnemonicParsing="false" onAction="#onAjuda" text="AJUDA DO SISTEMA BOTECOFX" />
                </items>
             </Menu>
         </menus>

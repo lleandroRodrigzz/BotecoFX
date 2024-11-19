@@ -6,16 +6,21 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
 
+import javax.swing.*;
+import java.io.File;
 import java.net.URL;
 import java.sql.ResultSet;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class AdmController implements Initializable {
@@ -94,9 +99,36 @@ public class AdmController implements Initializable {
             viewer.setExtendedState(JasperViewer.MAXIMIZED_BOTH);//maximizado
             viewer.setTitle(titulo);//titulo do relatório
             viewer.setVisible(true);
-        } catch (JRException erro){
+        }
+        catch (JRException erro){
             erro.printStackTrace();
         }
 
+    }
+
+    public void onBackup(ActionEvent event) {
+        try{
+            SingletonDB.backup("botecodb123.backup","botecodb");
+        }
+        catch (Exception e){
+            JOptionPane.showMessageDialog(null,"ERRO: " + e);
+        }
+    }
+
+    public void onRestore(ActionEvent event) {
+    }
+
+    public void onAjuda(ActionEvent event) {
+        WebView webView = new WebView();
+        webView.setPrefSize(1300,700);
+        //webView.getEngine().load("http://unoeste.br");    //Na web
+        File file = new File("help/ajuda.html");            //Local
+        webView.getEngine().load(file.toURI().toString());
+        Stage stage = new Stage();
+        stage.setScene(new Scene(webView));
+        stage.showAndWait();
+    }
+
+    public void onSobre(ActionEvent event) {
     }
 }
