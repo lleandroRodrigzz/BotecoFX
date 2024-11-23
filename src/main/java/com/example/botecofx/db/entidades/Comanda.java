@@ -101,10 +101,27 @@ public class Comanda {
     }
     public boolean addPagamento(TipoPagamento tpagamento, double valor)
     {
-        return pagamentos.add(new Pagamento(valor,tpagamento));
+        return pagamentos.add(new Pagamento(this,valor,tpagamento));
     }
     public boolean addItem(Item item)
     {
        return itens.add(item);
     }
+
+    @Override
+    public String toString() {
+        return "Comanda{" +
+                "id=" + id +
+                ", numero=" + numero +
+                ", descricao='" + descricao + '\'' +
+                ", data=" + data +
+                ", valor=" + valor +
+                ", status=" + status +
+                ", garcon=" + (garcon != null ? garcon.getNome() : "null") +
+                ", pagamentos=" + pagamentos.size() +
+                ", itens=" + itens.size() +
+                '}';
+    }
+
+
 }

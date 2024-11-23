@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.layout.BorderPane?>
 
 <BorderPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.botecofx.AdmController">
@@ -17,10 +16,8 @@
               <MenuItem onAction="#onCadProduto" text="_PRODUTO..." />
                   <MenuItem onAction="#onCadCategoria" text="_CATEGORIA..." />
                   <MenuItem onAction="#onCadUnidade" text="_UNIDADE..." />
-                  <MenuItem text="_TIPO DE PAGAMENTO" />
+                  <MenuItem onAction="#onCadTpPagamento" text="_TIPO DE PAGAMENTO..." />
                   <MenuItem onAction="#onCadGarcon" text="_GARÇON..." />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem onAction="#onFecharADM" text="_FECHAR BotecoFX" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="_RELATORIOS">

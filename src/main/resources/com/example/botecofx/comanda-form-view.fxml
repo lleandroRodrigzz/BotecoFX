@@ -47,31 +47,25 @@
                </font>
             </Label>
             <TextField fx:id="tfNumero" layoutX="15.0" layoutY="26.0" prefHeight="26.0" prefWidth="258.0" style="-fx-border-color: black;" />
-            <Label layoutX="303.0" text="Nome" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-            </Label>
-            <TextField fx:id="tfNome" layoutX="303.0" layoutY="26.0" prefHeight="26.0" prefWidth="278.0" style="-fx-border-color: black;" />
             <Label layoutX="606.0" text="Data*" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
             <DatePicker fx:id="dpData" layoutX="606.0" layoutY="26.0" style="-fx-border-color: black;" />
-            <Label layoutX="18.0" layoutY="112.0" text="Descrição" textFill="WHITE">
+            <Label layoutX="17.0" layoutY="72.0" text="Descrição" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <TextArea fx:id="taDescr" layoutX="15.0" layoutY="138.0" prefHeight="74.0" prefWidth="768.0" style="-fx-border-color: black;" />
-            <Label layoutX="15.0" layoutY="59.0" text="Nome do Garçon*" textFill="WHITE">
+            <TextArea fx:id="taDescr" layoutX="15.0" layoutY="105.0" prefHeight="74.0" prefWidth="768.0" style="-fx-border-color: black;" />
+            <Label layoutX="302.0" layoutY="2.0" text="Nome do Garçon*" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <ComboBox fx:id="cbGarcon" layoutX="15.0" layoutY="85.0" prefHeight="26.0" prefWidth="258.0" style="-fx-border-color: black;" />
-            <Label layoutX="572.0" layoutY="212.0" text="* Informações Obrigatórias" textFill="WHITE">
+            <ComboBox fx:id="cbGarcon" layoutX="302.0" layoutY="26.0" prefHeight="26.0" prefWidth="258.0" style="-fx-border-color: black;" />
+            <Label layoutX="578.0" layoutY="200.0" text="* Informações Obrigatórias" textFill="WHITE">
                <font>
                   <Font name="System Bold Italic" size="16.0" />
                </font>

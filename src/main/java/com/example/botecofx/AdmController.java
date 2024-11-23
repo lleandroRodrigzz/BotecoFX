@@ -60,8 +60,8 @@ public class AdmController implements Initializable {
         stage.showAndWait();
     }
 
-    public void onCadProduto(ActionEvent event) throws Exception{
-        FXMLLoader fxmlLoader = new FXMLLoader(BotecoFX.class.getResource("produto-consulta-view.fxml"));
+    public void onCadTpPagamento(ActionEvent actionEvent) throws Exception{
+        FXMLLoader fxmlLoader = new FXMLLoader(BotecoFX.class.getResource("tppagamento-consulta-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage=new Stage();
         stage.setScene(scene);
@@ -70,8 +70,14 @@ public class AdmController implements Initializable {
         stage.showAndWait();
     }
 
-    public void onFecharADM(ActionEvent actionEvent) {
-
+    public void onCadProduto(ActionEvent event) throws Exception{   //  NAO IMPLEMENTADO
+        FXMLLoader fxmlLoader = new FXMLLoader(BotecoFX.class.getResource("produto-consulta-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage=new Stage();
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.showAndWait();
     }
 
     public void onRelListaProdutos(ActionEvent event) {
@@ -116,6 +122,13 @@ public class AdmController implements Initializable {
     }
 
     public void onRestore(ActionEvent event) {
+        try {
+            SingletonDB.restaurar("botecobd123.backup", "botecodb");
+        }
+        catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null,"Erro: "+e);
+        }
     }
 
     public void onAjuda(ActionEvent event) {

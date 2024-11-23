@@ -8,6 +8,7 @@ public class Produto {
     private Categoria categoria;
     private Unidade unidade;
 
+    // Construtor completo
     public Produto(int id, String nome, double preco, String descr, Categoria categoria, Unidade unidade) {
         this.id = id;
         this.nome = nome;
@@ -17,14 +18,22 @@ public class Produto {
         this.unidade = unidade;
     }
 
+    // Construtor sem ID (para novos registros)
     public Produto(String nome, double preco, String descr, Categoria categoria, Unidade unidade) {
-        this(0,nome,preco,descr,categoria,unidade);
+        this(0, nome, preco, descr, categoria, unidade);
     }
 
+    // Construtor simplificado para situações básicas
+    public Produto(String nome, double preco) {
+        this(nome, preco, "", null, null);
+    }
+
+    // Construtor vazio
     public Produto() {
-        this(0,"",0,"",null, null);
+        this(0, "", 0.0, "", null, null);
     }
 
+    // Getters e setters
     public int getId() {
         return id;
     }

@@ -2,10 +2,8 @@ package com.example.botecofx;
 
 import com.example.botecofx.db.dals.CategoriaDAL;
 import com.example.botecofx.db.entidades.Categoria;
-import com.example.botecofx.db.entidades.Garcon;
 import com.example.botecofx.db.util.SingletonDB;
 import javafx.application.Platform;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
