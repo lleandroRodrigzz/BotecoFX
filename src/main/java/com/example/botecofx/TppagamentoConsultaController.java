@@ -1,6 +1,7 @@
 package com.example.botecofx;
 
 import com.example.botecofx.db.dals.TipoPagamentoDAL;
+import com.example.botecofx.db.entidades.Garcon;
 import com.example.botecofx.db.entidades.TipoPagamento;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -37,16 +38,13 @@ public class TppagamentoConsultaController implements Initializable {
     }
 
     private void preencherTabela(String filtro) {
-        List<TipoPagamento> tipoPagList = new ArrayList<>();
-        tipoPagList.add(new TipoPagamento(1,"Cartão Crédito"));
-        tipoPagList.add(new TipoPagamento(2,"Cartão Débito"));
-        tipoPagList.add(new TipoPagamento(3,"Pix"));
-        tabelaTpPagamento.setItems(FXCollections.observableArrayList(tipoPagList));
+        List<TipoPagamento> tiposPagto = tipoPagamentoDAL.get(filtro);
+        tabelaTpPagamento.setItems(FXCollections.observableArrayList(tiposPagto));
     }
 
     public void onFiltroTpPagamento(KeyEvent keyEvent) {
-        String filtro=tfFiltroTpPagamento.getText().toUpperCase();
-        preencherTabela("upper(tpg_nome) LIKE '"+filtro+"'");
+        String filtro = tfFiltroTpPagamento.getText().toUpperCase();
+        preencherTabela("upper(tpg_nome) LIKE '%" + filtro + "%'");
     }
 
     public void onNovoTpPagamento(ActionEvent actionEvent) throws Exception{
@@ -67,16 +65,17 @@ public class TppagamentoConsultaController implements Initializable {
 
     public void onAlterar(ActionEvent actionEvent) throws Exception{
         if(tabelaTpPagamento.getSelectionModel().getSelectedIndex() >= 0) {
-            tipoPagamento = tabelaTpPagamento.getSelectionModel().getSelectedItem();
+            TipoPagamento selecionado = tabelaTpPagamento.getSelectionModel().getSelectedItem();
             FXMLLoader fxmlLoader = new FXMLLoader(BotecoFX.class.getResource("tppagamento-form-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UNDECORATED);
+
+            TppagamentoFormController controller = fxmlLoader.getController();
+            controller.setTpPagamento(selecionado); // Passa o objeto selecionado para o formulário
             stage.showAndWait();
-            tipoPagamento = null;
-            tfFiltroTpPagamento.setText("");
             preencherTabela("");
         }
     }
@@ -85,7 +84,7 @@ public class TppagamentoConsultaController implements Initializable {
         if(tabelaTpPagamento.getSelectionModel().getSelectedIndex() >= 0) {
             TipoPagamento tpagt = tabelaTpPagamento.getSelectionModel().getSelectedItem();
             Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("Deseja excluir a Categoria "+tpagt.getNome());
+            alert.setContentText("Deseja excluir o Tipo de Pagamento "+tpagt.getNome());
             if(alert.showAndWait().get()== ButtonType.OK)
             {
                 tipoPagamentoDAL.apagar(tpagt);

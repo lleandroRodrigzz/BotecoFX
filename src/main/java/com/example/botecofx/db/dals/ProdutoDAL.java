@@ -42,8 +42,7 @@ public class ProdutoDAL implements IDAL<Produto> {
 
     @Override
     public boolean apagar(Produto entidade) {
-        return SingletonDB.getConexao().manipular("DELETE FROM produto WHERE prod_id="
-                +entidade.getId());
+        return SingletonDB.getConexao().manipular("DELETE FROM produto WHERE prod_id="+entidade.getId());
     }
 
     @Override
@@ -55,7 +54,7 @@ public class ProdutoDAL implements IDAL<Produto> {
             if(resultSet.next()) {
                 produto = new Produto(resultSet.getInt("prod_id"), resultSet.getString("prod_nome"),
                         resultSet.getDouble("prod_preco"), resultSet.getString("prod_descr"),
-                        new CategoriaDAL().get(resultSet.getInt("cat_id")),
+                        new CategoriaDAL().get(resultSet.getInt("cat_id")),         //Se pa vai da BO
                         new UnidadeDAL().get(resultSet.getInt("uni_id")));
             }
         }
@@ -80,7 +79,9 @@ public class ProdutoDAL implements IDAL<Produto> {
                 produtos.add(produto);
             }
         }
-        catch(Exception e){e.printStackTrace();}
+        catch(Exception e){
+            e.printStackTrace();
+        }
         return produtos;
     }
 }

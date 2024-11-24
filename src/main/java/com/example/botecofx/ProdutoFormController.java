@@ -1,7 +1,9 @@
 package com.example.botecofx;
 
+import com.example.botecofx.db.dals.CategoriaDAL;
 import com.example.botecofx.db.dals.GarconDAL;
 import com.example.botecofx.db.dals.ProdutoDAL;
+import com.example.botecofx.db.dals.UnidadeDAL;
 import com.example.botecofx.db.entidades.Categoria;
 import com.example.botecofx.db.entidades.Garcon;
 import com.example.botecofx.db.entidades.Produto;
@@ -49,19 +51,28 @@ public class ProdutoFormController implements Initializable {
 
     public void onConfimarProd(ActionEvent actionEvent) {
         try {
+            // Validar campos obrigatórios
             if (tfNomeProd.getText().isEmpty() || tfPreco.getText().isEmpty()) {
                 throw new IllegalArgumentException("Nome e Preço são obrigatórios.");
             }
 
-            // Converter o preço
             double preco = Double.parseDouble(tfPreco.getText());
 
-            // Criar objetos de Categoria e Unidade (fictícios neste exemplo, use DALs para buscar do banco)
-            Categoria categoria = new Categoria();
-            categoria.setId(Integer.parseInt(tfIDCateg.getText())); // Usar ID da categoria
+            // Validar ID da Categoria
+            int idCategoria = Integer.parseInt(tfIDCateg.getText());
+            CategoriaDAL categoriaDAL = new CategoriaDAL();
+            Categoria categoria = categoriaDAL.get(idCategoria);
+            if (categoria == null) {
+                throw new IllegalArgumentException("Categoria com ID " + idCategoria + " não encontrada.");
+            }
 
-            Unidade unidade = new Unidade();
-            unidade.setId(Integer.parseInt(tfIDUnid.getText())); // Usar ID da unidade
+            // Validar ID da Unidade
+            int idUnidade = Integer.parseInt(tfIDUnid.getText());
+            UnidadeDAL unidadeDAL = new UnidadeDAL();
+            Unidade unidade = unidadeDAL.get(idUnidade);
+            if (unidade == null) {
+                throw new IllegalArgumentException("Unidade com ID " + idUnidade + " não encontrada.");
+            }
 
             // Criar o produto
             Produto prod = new Produto(
@@ -72,24 +83,38 @@ public class ProdutoFormController implements Initializable {
                     unidade
             );
 
-            // Gravar no banco
-            if (!new ProdutoDAL().gravar(prod)) {
-                throw new RuntimeException("Erro ao gravar o produto: " +
-                        SingletonDB.getConexao().getMensagemErro());
+            // Verificar se é uma alteração ou uma nova inserção
+            ProdutoDAL produtoDAL = new ProdutoDAL();
+            if (!tfIDProd.getText().isEmpty()) {
+                // Alteração
+                prod.setId(Integer.parseInt(tfIDProd.getText()));
+                if (!produtoDAL.alterar(prod)) {
+                    throw new RuntimeException("Erro ao atualizar o produto: " +
+                            SingletonDB.getConexao().getMensagemErro());
+                }
+            } else {
+                // Inserção
+                if (!produtoDAL.gravar(prod)) {
+                    throw new RuntimeException("Erro ao gravar o produto: " +
+                            SingletonDB.getConexao().getMensagemErro());
+                }
             }
 
             // Fechar o formulário
             btConfirmarProd.getScene().getWindow().hide();
 
         } catch (NumberFormatException e) {
+            // Tratamento para números inválidos
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Preço inválido. Por favor, insira um número.");
+            alert.setContentText("ID inválido ou Preço inválido. Por favor, insira números.");
             alert.showAndWait();
         } catch (IllegalArgumentException e) {
+            // Tratamento para argumentos inválidos (ex.: categoria ou unidade não encontrada)
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText(e.getMessage());
             alert.showAndWait();
         } catch (Exception e) {
+            // Tratamento de erros inesperados
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Erro inesperado: " + e.getMessage());
             alert.showAndWait();
@@ -98,5 +123,14 @@ public class ProdutoFormController implements Initializable {
 
     public void onCancelarProd(ActionEvent actionEvent) {
         btCancelarProd.getScene().getWindow().hide();
+    }
+
+    public void setProduto(Produto selecionado) {
+        tfIDProd.setText(String.valueOf(selecionado.getId()));
+        tfIDCateg.setText(String.valueOf(selecionado.getCategoria().getId()));
+        tfIDUnid.setText(String.valueOf(selecionado.getUnidade().getId()));
+        tfNomeProd.setText(selecionado.getNome());
+        tfPreco.setText(String.valueOf(selecionado.getPreco()));
+        tfDescricaoProd.setText(selecionado.getDescr());
     }
 }

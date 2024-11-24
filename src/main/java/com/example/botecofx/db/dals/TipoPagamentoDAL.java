@@ -53,12 +53,12 @@ public class TipoPagamentoDAL implements IDAL<TipoPagamento>
         String sql="SELECT * FROM tipopgto";
         if(!filtro.isEmpty())
             sql+=" WHERE "+filtro;
-        sql+=" ORDER BY cat_nome";
+        sql+=" ORDER BY tpg_nome";
         ResultSet resultSet=SingletonDB.getConexao().consultar(sql);
         try{
             while(resultSet.next()){
                 tipoPagamentos.add(new TipoPagamento(resultSet.getInt("tpg_id"),
-                        resultSet.getString("tpg_nome")));
+                                                     resultSet.getString("tpg_nome")));
             }
         }catch (Exception e){
             e.printStackTrace();

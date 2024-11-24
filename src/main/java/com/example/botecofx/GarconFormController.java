@@ -95,7 +95,13 @@ public class GarconFormController implements Initializable {
         tfCidade.setText(garcon.getCidade());
         tfEndereco.setText(garcon.getEndereco());
         tfUF.setText(garcon.getUf());
-        //imageView.setImage();         //ver depois como aparecer a imagem do garcon
+        BufferedImage bufferedImage = SingletonDB.getConexao().carregarImagem("garcon", "gar_foto", "gar_id", garcon.getId());
+        if (bufferedImage != null) {
+            imageView.setImage(SwingFXUtils.toFXImage(bufferedImage, null));
+        } else {
+            // Use uma imagem padrão caso não haja foto do garçom
+            imageView.setImage(new Image(getClass().getResourceAsStream("/com/example/botecofx/semFoto.png")));
+        }
     }
 
     @FXML
@@ -132,7 +138,7 @@ public class GarconFormController implements Initializable {
             }
             else
             {
-                if (!new GarconDAL().gravar(garcon)) // é uma inserção
+                if (!new GarconDAL().gravar(garcon,file)) // é uma inserção
                 {
                     throw new RuntimeException("Erro ao gravar o novo garçom.");
                 }

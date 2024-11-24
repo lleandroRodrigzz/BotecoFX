@@ -1,7 +1,9 @@
 package com.example.botecofx;
 
 import com.example.botecofx.db.dals.CategoriaDAL;
+import com.example.botecofx.db.dals.UnidadeDAL;
 import com.example.botecofx.db.entidades.Categoria;
+import com.example.botecofx.db.entidades.Unidade;
 import com.example.botecofx.db.util.SingletonDB;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -37,18 +39,28 @@ public class CategoriaFormController implements Initializable {
     }
 
     public void onConfimarCategoria(ActionEvent actionEvent) {
-        Categoria categoria = new Categoria(tfNomeCategoria.getText());
-        if(!new CategoriaDAL().gravar(categoria))
+        Categoria categ = new Categoria(tfNomeCategoria.getText());
+        if(!tfIDCategoria.getText().isEmpty())    //é edição
         {
-            Alert alert=new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Erro ao gravar a Categoria \n"+
-                    SingletonDB.getConexao().getMensagemErro());
-            alert.showAndWait();
+            categ.setId(Integer.parseInt(tfIDCategoria.getText()));
+            if(!new CategoriaDAL().alterar(categ)){
+                throw new RuntimeException("Erro ao atualizar a Categoria");
+            }
+        }
+        else{   //é adição
+            if(!new CategoriaDAL().gravar(categ)){
+                throw new RuntimeException("Erro ao gravar a Categoria");
+            }
         }
         btConfirmarCategoria.getScene().getWindow().hide();
     }
 
     public void onCancelarCategoria(ActionEvent actionEvent) {
         btCancelarCategoria.getScene().getWindow().hide();
+    }
+
+    public void setCategoria(Categoria selecionado) {
+        tfIDCategoria.setText(String.valueOf(selecionado.getId()));
+        tfNomeCategoria.setText(selecionado.getNome());
     }
 }

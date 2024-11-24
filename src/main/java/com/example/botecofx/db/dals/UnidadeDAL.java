@@ -1,4 +1,4 @@
-package com.example.botecofx.db.dals;
+    package com.example.botecofx.db.dals;
 
 import com.example.botecofx.db.entidades.Unidade;
 import com.example.botecofx.db.util.IDAL;
@@ -22,7 +22,7 @@ public class UnidadeDAL implements IDAL <Unidade>{
     public boolean alterar(Unidade entidade) {
         String sql= """
                 UPDATE unidade SET uni_nome='#1'
-                    WHERE cat_id=#2;
+                    WHERE uni_id=#2;
                 """;
         sql=sql.replace("#1",entidade.getNome());
         sql=sql.replace("#2",""+entidade.getId());
@@ -60,7 +60,7 @@ public class UnidadeDAL implements IDAL <Unidade>{
         try{
             while(resultSet.next()){
                 unidades.add(new Unidade(resultSet.getInt("uni_id"),
-                        resultSet.getString("uni_nome")));
+                                         resultSet.getString("uni_nome")));
             }
         }catch (Exception e){
             e.printStackTrace();

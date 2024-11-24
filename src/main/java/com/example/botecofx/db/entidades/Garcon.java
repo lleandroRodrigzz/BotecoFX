@@ -1,5 +1,8 @@
 package com.example.botecofx.db.entidades;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+
 public class Garcon {
     private int id;
     private String nome;
@@ -10,8 +13,10 @@ public class Garcon {
     private String cidade;
     private String uf;
     private String fone;
+    private BufferedImage foto;
 
-    public Garcon(int id, String nome, String cpf, String cep, String endereco, String numero, String cidade, String uf, String fone) {
+    // Construtor completo
+    public Garcon(int id, String nome, String cpf, String cep, String endereco, String numero, String cidade, String uf, String fone, BufferedImage foto) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
@@ -21,24 +26,25 @@ public class Garcon {
         this.cidade = cidade;
         this.uf = uf;
         this.fone = fone;
+        this.foto = foto;
     }
 
+    // Construtor sem foto (foto é opcional)
+    public Garcon(int id, String nome, String cpf, String cep, String endereco, String numero, String cidade, String uf, String fone) {
+        this(id, nome, cpf, cep, endereco, numero, cidade, uf, fone, null);
+    }
+
+    // Construtor para novo registro (id padrão 0)
     public Garcon(String nome, String cpf, String cep, String endereco, String numero, String cidade, String uf, String fone) {
-        this(0,nome,cpf,cep,endereco,numero,cidade,uf,fone);
-        this.nome = nome;
-        this.cpf = cpf;
-        this.cep = cep;
-        this.endereco = endereco;
-        this.numero = numero;
-        this.cidade = cidade;
-        this.uf = uf;
-        this.fone = fone;
+        this(0, nome, cpf, cep, endereco, numero, cidade, uf, fone, null);
     }
 
+    // Construtor vazio para inicializações flexíveis
     public Garcon() {
-        this(0,"","","","","","","","");
+        this(0, "", "", "", "", "", "", "", "", null);
     }
 
+    // Getters e Setters
     public int getId() {
         return id;
     }
@@ -111,6 +117,15 @@ public class Garcon {
         this.fone = fone;
     }
 
+    public BufferedImage getFoto() {
+        return foto;
+    }
+
+    public void setFoto(BufferedImage foto) {
+        this.foto = foto;
+    }
+
+    // Método toString para exibir o nome do garçom
     @Override
     public String toString() {
         return nome;

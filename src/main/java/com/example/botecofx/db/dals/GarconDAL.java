@@ -11,58 +11,74 @@ import java.util.List;
 
 public class GarconDAL implements IDAL<Garcon> {
     public boolean gravar(Garcon entidade, File foto) {
-        String sql= """
-                INSERT INTO public.garcon(gar_nome, gar_cpf, gar_cep, gar_endereco, gar_cidade, gar_uf, gar_fone, gar_numero)
+        String sql = """
+                INSERT INTO garcon(gar_nome, gar_cpf, gar_cep, gar_endereco, gar_cidade, gar_uf, gar_fone, gar_numero)
                 VALUES ('#1','#2','#3','#4','#5','#6','#7','#8');
                 """;
-        sql=sql.replace("#1",entidade.getNome());
-        sql=sql.replace("#2",entidade.getCpf());
-        sql=sql.replace("#3",entidade.getCep());
-        sql=sql.replace("#4",entidade.getEndereco());
-        sql=sql.replace("#5",entidade.getCidade());
-        sql=sql.replace("#6",entidade.getUf());
-        sql=sql.replace("#7",entidade.getFone());
-        sql=sql.replace("#8",entidade.getNumero());
-        if(SingletonDB.getConexao().manipular(sql));
-        {
-            if (foto!=null)
-            {  int id=SingletonDB.getConexao().getMaxPK("garcon","gar_id");
-                if(SingletonDB.getConexao().gravarImagem(foto,"garcon","gar_foto","gar_id",id))
+        sql = sql.replace("#1", entidade.getNome());
+        sql = sql.replace("#2", entidade.getCpf());
+        sql = sql.replace("#3", entidade.getCep());
+        sql = sql.replace("#4", entidade.getEndereco());
+        sql = sql.replace("#5", entidade.getCidade());
+        sql = sql.replace("#6", entidade.getUf());
+        sql = sql.replace("#7", entidade.getFone());
+        sql = sql.replace("#8", entidade.getNumero());
+
+        if (SingletonDB.getConexao().manipular(sql)) {
+            if (foto != null) {
+                int id = SingletonDB.getConexao().getMaxPK("garcon", "gar_id");
+                if (SingletonDB.getConexao().gravarImagem(foto, "garcon", "gar_foto", "gar_id", id)) {
                     return true;
-            }
-            else
+                }
+            } else {
                 return true;
+            }
         }
         return false;
     }
 
     @Override
     public boolean gravar(Garcon entidade) {
-        return false;
+        throw new UnsupportedOperationException("Use gravar(Garcon entidade, File foto) em vez deste método.");
+    }
+
+    public boolean alterar(Garcon entidade, File foto) {
+        String sql = """
+            UPDATE public.garcon
+            SET gar_nome = '#1', gar_cpf = '#2', gar_cep = '#3', gar_endereco = '#4', 
+                gar_cidade = '#5', gar_uf = '#6', gar_fone = '#7', gar_numero = '#8'
+            WHERE gar_id = #9;
+            """;
+        sql = sql.replace("#1", entidade.getNome());
+        sql = sql.replace("#2", entidade.getCpf());
+        sql = sql.replace("#3", entidade.getCep());
+        sql = sql.replace("#4", entidade.getEndereco());
+        sql = sql.replace("#5", entidade.getCidade());
+        sql = sql.replace("#6", entidade.getUf());
+        sql = sql.replace("#7", entidade.getFone());
+        sql = sql.replace("#8", entidade.getNumero());
+        sql = sql.replace("#9", "" + entidade.getId());
+
+        if (!SingletonDB.getConexao().manipular(sql)) {
+            return false;
+        }
+
+        if (foto != null) {
+            return SingletonDB.getConexao().gravarImagem(foto, "garcon", "gar_foto", "gar_id", entidade.getId());
+        }
+
+        return true;
     }
 
     @Override
     public boolean alterar(Garcon entidade) {
-        String sql = """
-                UPDATE public.garcon
-                	SET gar_nome = '#1', gar_cpf = '#2', gar_cep = '#3', gar_endereco = '#4', gar_cidade = '#5', gar_uf = '#6', gar_fone = '#7', gar_foto = NULL, gar_numero = '#8'
-                	WHERE gar_id = #9;
-                """;
-        sql=sql.replace("#1",entidade.getNome());
-        sql=sql.replace("#2",entidade.getCpf());
-        sql=sql.replace("#3",entidade.getCep());
-        sql=sql.replace("#4",entidade.getEndereco());
-        sql=sql.replace("#5",entidade.getCidade());
-        sql=sql.replace("#6",entidade.getUf());
-        sql=sql.replace("#7",entidade.getFone());
-        sql=sql.replace("#8",entidade.getNumero());
-        sql = sql.replace("#9",""+entidade.getId());
-        return SingletonDB.getConexao().manipular(sql);
+        // Implementação para atender à interface
+        return alterar(entidade, null); // Chama o metodo existente com o arquivo de foto como null
     }
 
     @Override
     public boolean apagar(Garcon entidade) {
-        return SingletonDB.getConexao().manipular("DELETE FROM garcon WHERE gar_id = "+ entidade.getId());
+        return SingletonDB.getConexao().manipular("DELETE FROM garcon WHERE gar_id = " + entidade.getId());
     }
 
     @Override
@@ -70,8 +86,9 @@ public class GarconDAL implements IDAL<Garcon> {
         Garcon garcon = null;
         String sql = "SELECT * FROM garcon WHERE gar_id = " + id;
         ResultSet resultSet = SingletonDB.getConexao().consultar(sql);
+
         try {
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 garcon = new Garcon(
                         id,
                         resultSet.getString("gar_nome"),
@@ -83,9 +100,10 @@ public class GarconDAL implements IDAL<Garcon> {
                         resultSet.getString("gar_uf"),
                         resultSet.getString("gar_fone")
                 );
+                garcon.setFoto(SingletonDB.getConexao().carregarImagem("garcon", "gar_foto", "gar_id", id));
             }
-        }catch (Exception e){
-            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar garçom: " + e.getMessage());
         }
         return garcon;
     }

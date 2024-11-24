@@ -3,6 +3,7 @@ package com.example.botecofx;
 import com.example.botecofx.db.dals.CategoriaDAL;
 import com.example.botecofx.db.dals.UnidadeDAL;
 import com.example.botecofx.db.entidades.Categoria;
+import com.example.botecofx.db.entidades.TipoPagamento;
 import com.example.botecofx.db.entidades.Unidade;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -38,15 +39,13 @@ public class UnidadeConsultaController implements Initializable {
     }
 
     private void preencherTabela(String filtro) {
-        List<Unidade> unidadeList = new ArrayList<>();
-        unidadeList.add(new Unidade(1,"Teste1"));
-        unidadeList.add(new Unidade(2,"Teste2"));
+        List<Unidade> unidadeList = unidadeDAL.get(filtro);
         tabelaUnidade.setItems(FXCollections.observableArrayList(unidadeList));
     }
 
     public void onFiltroUnidade(KeyEvent keyEvent) {
-        String filtro=tfFiltroUnidade.getText().toUpperCase();
-        preencherTabela("upper(uni_nome) LIKE '"+filtro+"'");
+        String filtro = tfFiltroUnidade.getText().toUpperCase();
+        preencherTabela("upper(uni_nome) LIKE '%" + filtro + "%'");
     }
 
     public void onNovoUnidade(ActionEvent actionEvent) throws Exception{
@@ -67,16 +66,17 @@ public class UnidadeConsultaController implements Initializable {
 
     public void onAlterar(ActionEvent actionEvent) throws Exception{
         if(tabelaUnidade.getSelectionModel().getSelectedIndex() >= 0) {
-            unidade = tabelaUnidade.getSelectionModel().getSelectedItem();
-            FXMLLoader fxmlLoader = new FXMLLoader(BotecoFX.class.getResource("categoria-form-view.fxml"));
+            Unidade selecionado = tabelaUnidade.getSelectionModel().getSelectedItem();
+            FXMLLoader fxmlLoader = new FXMLLoader(BotecoFX.class.getResource("unidade-form-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UNDECORATED);
+
+            UnidadeFormController controller = fxmlLoader.getController();
+            controller.setUnidade(selecionado); // Passa o objeto selecionado para o formulário
             stage.showAndWait();
-            unidade = null;
-            tfFiltroUnidade.setText("");
             preencherTabela("");
         }
     }

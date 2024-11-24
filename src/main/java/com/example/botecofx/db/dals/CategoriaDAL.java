@@ -60,7 +60,7 @@ public class CategoriaDAL implements IDAL <Categoria>{
         try{
             while(resultSet.next()){
                 categorias.add(new Categoria(resultSet.getInt("cat_id"),
-                        resultSet.getString("cat_nome")));
+                                             resultSet.getString("cat_nome")));
             }
         }catch (Exception e){
             e.printStackTrace();

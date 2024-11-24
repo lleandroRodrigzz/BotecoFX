@@ -2,6 +2,7 @@ package com.example.botecofx;
 
 import com.example.botecofx.db.dals.CategoriaDAL;
 import com.example.botecofx.db.entidades.Categoria;
+import com.example.botecofx.db.entidades.Unidade;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -45,15 +46,13 @@ public class CategoriaConsultaController implements Initializable {
     }
 
     private void preencherTabela(String filtro) {
-        List<Categoria> categoriaList = new ArrayList<>();
-        categoriaList.add(new Categoria(1,"Bebida"));
-        categoriaList.add(new Categoria(2,"Prato"));
+        List<Categoria> categoriaList = categoriaDAL.get(filtro);
         tabelaCategoria.setItems(FXCollections.observableArrayList(categoriaList));
     }
 
     public void onFiltroCategoria(KeyEvent keyEvent) {
-        String filtro=tfFiltroCategoria.getText().toUpperCase();
-        preencherTabela("upper(cat_nome) LIKE '"+filtro+"'");
+        String filtro = tfFiltroCategoria.getText().toUpperCase();
+        preencherTabela("upper(cat_nome) LIKE '%" + filtro + "%'");
     }
 
     public void onNovoCategoria(ActionEvent actionEvent) throws Exception{
@@ -74,16 +73,17 @@ public class CategoriaConsultaController implements Initializable {
 
     public void onAlterar(ActionEvent actionEvent) throws Exception{
         if(tabelaCategoria.getSelectionModel().getSelectedIndex() >= 0) {
-            categoria = tabelaCategoria.getSelectionModel().getSelectedItem();
+            Categoria selecionado = tabelaCategoria.getSelectionModel().getSelectedItem();
             FXMLLoader fxmlLoader = new FXMLLoader(BotecoFX.class.getResource("categoria-form-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UNDECORATED);
+
+            CategoriaFormController controller = fxmlLoader.getController();
+            controller.setCategoria(selecionado); // Passa o objeto selecionado para o formulário
             stage.showAndWait();
-            categoria = null;
-            tfFiltroCategoria.setText("");
             preencherTabela("");
         }
     }

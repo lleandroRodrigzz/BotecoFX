@@ -48,16 +48,13 @@ public class ProdutoConsultaController implements Initializable {
     }
 
     private void preencherTabela(String filtro) {
-        List<Produto> prodList=new ArrayList<>();
-        prodList.add(new Produto(1,"Teste1",20.00,"DescricaoTeste",new Categoria(1,"Teste1"),new Unidade(1,"Teste1")));
-        prodList.add(new Produto(2,"Teste2",30.00,"DescricaoTeste222",new Categoria(2,"Teste2"),new Unidade(2,"Teste2")));
-        //garconDAL.get(filtro);
+        List<Produto> prodList = produtoDAL.get(filtro);
         tabelaProduto.setItems(FXCollections.observableArrayList(prodList));
     }
 
     public void onFiltro(KeyEvent keyEvent) {
         String filtro = tfFiltroProduto.getText().toUpperCase();
-        preencherTabela("upper(gar_nome) LIKE '"+filtro+"'");
+        preencherTabela("upper(prod_nome) LIKE '%" + filtro + "%'");
     }
 
     public void onNovoProduto(ActionEvent actionEvent) throws Exception{
@@ -69,7 +66,7 @@ public class ProdutoConsultaController implements Initializable {
         stage.initStyle(StageStyle.UNDECORATED);
         stage.showAndWait();
         tfFiltroProduto.setText("");
-        //preencherTabela("");
+        preencherTabela("");
     }
 
     public void onFecharProduto(ActionEvent actionEvent) {
@@ -77,17 +74,18 @@ public class ProdutoConsultaController implements Initializable {
     }
 
     public void onAlterarProduto(ActionEvent actionEvent) throws Exception{
-        if(tabelaProduto.getSelectionModel().getSelectedIndex()>=0) {
-            produto = tabelaProduto.getSelectionModel().getSelectedItem();
-            FXMLLoader fxmlLoader = new FXMLLoader(BotecoFX.class.getResource("garcon-form-view.fxml"));
+        if(tabelaProduto.getSelectionModel().getSelectedIndex() >= 0) {
+            Produto selecionado = tabelaProduto.getSelectionModel().getSelectedItem();
+            FXMLLoader fxmlLoader = new FXMLLoader(BotecoFX.class.getResource("produto-form-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UNDECORATED);
+
+            ProdutoFormController controller = fxmlLoader.getController();
+            controller.setProduto(selecionado); // Passa o objeto selecionado para o formulário
             stage.showAndWait();
-            produto = null;
-            tfFiltroProduto.setText("");
             preencherTabela("");
         }
     }
@@ -96,7 +94,7 @@ public class ProdutoConsultaController implements Initializable {
         if(tabelaProduto.getSelectionModel().getSelectedIndex()>=0) {
             Produto prod = tabelaProduto.getSelectionModel().getSelectedItem();
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("Deseja excluir o garçon "+prod.getNome());
+            alert.setContentText("Deseja excluir o Produto "+prod.getNome());
             if(alert.showAndWait().get()== ButtonType.OK)
             {
                 produtoDAL.apagar(prod);

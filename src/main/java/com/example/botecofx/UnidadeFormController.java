@@ -1,8 +1,10 @@
 package com.example.botecofx;
 
 import com.example.botecofx.db.dals.CategoriaDAL;
+import com.example.botecofx.db.dals.TipoPagamentoDAL;
 import com.example.botecofx.db.dals.UnidadeDAL;
 import com.example.botecofx.db.entidades.Categoria;
+import com.example.botecofx.db.entidades.TipoPagamento;
 import com.example.botecofx.db.entidades.Unidade;
 import com.example.botecofx.db.util.SingletonDB;
 import javafx.application.Platform;
@@ -38,18 +40,28 @@ public class UnidadeFormController implements Initializable {
     }
 
     public void onConfimarUnidade(ActionEvent actionEvent) {
-        Unidade unidade = new Unidade(tfNomeUnidade.getText());
-        if(!new UnidadeDAL().gravar(unidade))
+        Unidade unid = new Unidade(tfNomeUnidade.getText());
+        if(!tfIDUnidade.getText().isEmpty())    //é edição
         {
-            Alert alert=new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Erro ao gravar a Unidade \n"+
-                    SingletonDB.getConexao().getMensagemErro());
-            alert.showAndWait();
+            unid.setId(Integer.parseInt(tfIDUnidade.getText()));
+            if(!new UnidadeDAL().alterar(unid)){
+                throw new RuntimeException("Erro ao atualizar a Unidade");
+            }
+        }
+        else{   //é adição
+            if(!new UnidadeDAL().gravar(unid)){
+                throw new RuntimeException("Erro ao gravar a Unidade");
+            }
         }
         btConfirmarUnidade.getScene().getWindow().hide();
     }
 
     public void onCancelarUnidade(ActionEvent actionEvent) {
         btCancelarUnidade.getScene().getWindow().hide();
+    }
+
+    public void setUnidade(Unidade selecionado) {
+        tfIDUnidade.setText(String.valueOf(selecionado.getId()));
+        tfNomeUnidade.setText(selecionado.getNome());
     }
 }
