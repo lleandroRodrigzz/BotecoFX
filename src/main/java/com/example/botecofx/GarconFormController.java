@@ -85,6 +85,19 @@ public class GarconFormController implements Initializable {
         }
     }
 
+    public void setGarcon(Garcon garcon) {
+        tfID.setText(String.valueOf(garcon.getId()));
+        tfNome.setText(garcon.getNome());
+        tfCPF.setText(garcon.getCpf());
+        tfCEP.setText(garcon.getCep());
+        tfFone.setText(garcon.getFone());
+        tfNumero.setText(garcon.getNumero());
+        tfCidade.setText(garcon.getCidade());
+        tfEndereco.setText(garcon.getEndereco());
+        tfUF.setText(garcon.getUf());
+        //imageView.setImage();         //ver depois como aparecer a imagem do garcon
+    }
+
     @FXML
     void onCancelar(ActionEvent event) {
         btCancelar.getScene().getWindow().hide();
@@ -92,18 +105,49 @@ public class GarconFormController implements Initializable {
 
     @FXML
     void onConfimar(ActionEvent event) {
-        Garcon garcon=new Garcon(tfNome.getText(),tfCPF.getText(),
-                tfCEP.getText(),tfEndereco.getText(),
-                tfNumero.getText(),tfCidade.getText(),
-                tfUF.getText(),tfFone.getText());
-        if(!new GarconDAL().gravar(garcon,file))
-        {
-            Alert alert=new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Erro ao gravar o garçon"+
-                    SingletonDB.getConexao().getMensagemErro());
+        try {
+            if (tfNome.getText().isEmpty() || tfCPF.getText().isEmpty()) {
+                throw new IllegalArgumentException("Nome e CPF são obrigatórios.");
+            }
+
+            // Criar o objeto Garcon com os dados do formulário
+            Garcon garcon = new Garcon();
+            garcon.setNome(tfNome.getText());
+            garcon.setCpf(tfCPF.getText());
+            garcon.setCep(tfCEP.getText());
+            garcon.setEndereco(tfEndereco.getText());
+            garcon.setNumero(tfNumero.getText());
+            garcon.setCidade(tfCidade.getText());
+            garcon.setUf(tfUF.getText());
+            garcon.setFone(tfFone.getText());
+
+
+            if (!tfID.getText().isEmpty())// é uma edição
+            {
+                garcon.setId(Integer.parseInt(tfID.getText()));
+                if (!new GarconDAL().alterar(garcon))
+                {
+                    throw new RuntimeException("Erro ao atualizar o garçom.");
+                }
+            }
+            else
+            {
+                if (!new GarconDAL().gravar(garcon)) // é uma inserção
+                {
+                    throw new RuntimeException("Erro ao gravar o novo garçom.");
+                }
+            }
+            btConfirmar.getScene().getWindow().hide();
+
+        } catch (IllegalArgumentException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Erro: " + e.getMessage());
             alert.showAndWait();
         }
-        btConfirmar.getScene().getWindow().hide();
     }
 
 

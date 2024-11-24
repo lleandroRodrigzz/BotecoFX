@@ -93,28 +93,29 @@ public class GarconDAL implements IDAL<Garcon> {
     @Override
     public List<Garcon> get(String filtro) {
         List<Garcon> garcons = new ArrayList<>();
-        String sql = "SELECT * FROM garcon ";
-        if(filtro.length()>0){
-            sql+= " WHERE " + filtro;
+        String sql = "SELECT * FROM public.garcon";
+        if (!filtro.isEmpty()) {
+            sql += " WHERE " + filtro;
         }
-        sql+= " ORDER BY gar_id ;";
+        sql += " ORDER BY gar_nome";
+
+        ResultSet rs = SingletonDB.getConexao().consultar(sql);
         try {
-            ResultSet resultSet = SingletonDB.getConexao().consultar(sql);
-            while(resultSet.next()){
-                garcons.add( new Garcon(
-                        resultSet.getInt("gar_id"),
-                        resultSet.getString("gar_nome"),
-                        resultSet.getString("gar_cpf"),
-                        resultSet.getString("gar_cep"),
-                        resultSet.getString("gar_endereco"),
-                        resultSet.getString("gar_numero"),
-                        resultSet.getString("gar_cidade"),
-                        resultSet.getString("gar_uf"),
-                        resultSet.getString("gar_fone")
+            while (rs.next()) {
+                garcons.add(new Garcon(
+                        rs.getInt("gar_id"),
+                        rs.getString("gar_nome"),
+                        rs.getString("gar_cpf"),
+                        rs.getString("gar_cep"),
+                        rs.getString("gar_endereco"),
+                        rs.getString("gar_numero"),
+                        rs.getString("gar_cidade"),
+                        rs.getString("gar_uf"),
+                        rs.getString("gar_fone")
                 ));
             }
-        }catch (Exception e){
-            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Erro ao listar garçons: " + e.getMessage());
         }
         return garcons;
     }

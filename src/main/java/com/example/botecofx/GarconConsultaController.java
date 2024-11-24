@@ -54,26 +54,24 @@ public class GarconConsultaController implements Initializable {
     }
 
     private void preencherTabela(String filtro) {
-        List<Garcon> garconList=new ArrayList<>();
-        garconList.add(new Garcon(1,"Zé","212121","19053300","","","Alvares Machado","SP","189998888"));
-        garconList.add(new Garcon(2,"Miriam","212121","19053300","","","Regente Feijo","SP","188888888"));
-        //garconDAL.get(filtro);
-        tabela.setItems(FXCollections.observableArrayList(garconList));
+        List<Garcon> garcons = garconDAL.get(filtro);
+        tabela.setItems(FXCollections.observableArrayList(garcons));
     }
 
     @FXML
     void onAlterar(ActionEvent event) throws Exception{
-        if(tabela.getSelectionModel().getSelectedIndex()>=0) {
-            garcon=tabela.getSelectionModel().getSelectedItem();
+        if(tabela.getSelectionModel().getSelectedIndex() >= 0) {
+            Garcon selecionado = tabela.getSelectionModel().getSelectedItem();
             FXMLLoader fxmlLoader = new FXMLLoader(BotecoFX.class.getResource("garcon-form-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UNDECORATED);
+
+            GarconFormController controller = fxmlLoader.getController();
+            controller.setGarcon(selecionado); // Passa o objeto selecionado para o formulário
             stage.showAndWait();
-            garcon=null;
-            tfFiltro.setText("");
             preencherTabela("");
         }
     }
@@ -95,12 +93,13 @@ public class GarconConsultaController implements Initializable {
     @FXML
     void onFechar(ActionEvent event) {
         tfFiltro.getScene().getWindow().hide();
+        preencherTabela(""); // Recarregar a tabela
     }
 
     @FXML
     void onFiltro(KeyEvent event) {
-        String filtro=tfFiltro.getText().toUpperCase();
-        preencherTabela("upper(gar_nome) LIKE '"+filtro+"'");
+        String filtro = tfFiltro.getText().toUpperCase();
+        preencherTabela("upper(gar_nome) LIKE '%" + filtro + "%'");
     }
 
     @FXML
