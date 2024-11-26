@@ -32,12 +32,10 @@
         </HBox>
         <TableView fx:id="tabelaProduto" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black; -fx-background-color: black;" VBox.vgrow="ALWAYS">
             <columns>
-            <TableColumn fx:id="colIDProduto" maxWidth="191.99996948242188" prefWidth="124.0" text="ID DO PRODUTO" />
-                <TableColumn fx:id="colIDCategoria" prefWidth="113.0" text="ID DA CATEGORIA" />
-                <TableColumn fx:id="colIDUnidade" prefWidth="114.0" text="ID DA UNIDADE" />
+                <TableColumn fx:id="colIDProduto" maxWidth="191.99996948242188" prefWidth="124.0" text="ID DO PRODUTO" />
                 <TableColumn fx:id="colNome" maxWidth="451.0" prefWidth="131.0" text="NOME" />
-            <TableColumn fx:id="colPreco" maxWidth="451.0" prefWidth="165.0" text="PREÇO" />
-            <TableColumn fx:id="colDescricao" maxWidth="451.0" prefWidth="165.0" text="DESCRIÇÃO" />
+                <TableColumn fx:id="colPreco" maxWidth="451.0" prefWidth="165.0" text="PREÇO" />
+                <TableColumn fx:id="colDescricao" maxWidth="451.0" prefWidth="165.0" text="DESCRIÇÃO" />
             </columns>
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

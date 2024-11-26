@@ -27,8 +27,6 @@ public class ProdutoConsultaController implements Initializable {
     public TextField tfFiltroProduto;
     public TableView <Produto> tabelaProduto;
     public TableColumn <Produto, String> colIDProduto;
-    public TableColumn <Produto, String> colIDCategoria;
-    public TableColumn <Produto, String> colIDUnidade;
     public TableColumn <Produto, String> colNome;
     public TableColumn <Produto, String> colPreco;
     public TableColumn <Produto, String> colDescricao;
@@ -39,8 +37,6 @@ public class ProdutoConsultaController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         produtoDAL = new ProdutoDAL();
         colIDProduto.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colIDCategoria.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colIDUnidade.setCellValueFactory(new PropertyValueFactory<>("id"));
         colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colPreco.setCellValueFactory(new PropertyValueFactory<>("preco"));
         colDescricao.setCellValueFactory(new PropertyValueFactory<>("descr"));

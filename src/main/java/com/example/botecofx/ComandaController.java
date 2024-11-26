@@ -16,6 +16,21 @@ public class ComandaController {
     public static int id;
 
     public void onGerenciarComanda(MouseEvent mouseEvent) throws Exception{
+//        FXMLLoader fxmlLoader = new FXMLLoader(BotecoFX.class.getResource("comanda-form-view.fxml"));
+//        Scene scene = new Scene(fxmlLoader.load());
+//        Stage stage=new Stage();
+//        stage.setScene(scene);
+//        stage.initModality(Modality.APPLICATION_MODAL);
+//        stage.initStyle(StageStyle.UNDECORATED);
+//        stage.showAndWait();
+    }
+
+    public void setNumeroComanda(int i) {
+        this.id = i;
+        lbNumComanda.setText(""+id);
+    }
+
+    public void onNovaComanda(MouseEvent mouseEvent) throws Exception{
         FXMLLoader fxmlLoader = new FXMLLoader(BotecoFX.class.getResource("comanda-form-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage=new Stage();
@@ -23,11 +38,5 @@ public class ComandaController {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.showAndWait();
-    }
-
-    public void setNumeroComanda(int i) {
-        this.id = i;
-        lbNumComanda.setText(""+id);
-        lbValor.setText("R$ 99,99");
     }
 }

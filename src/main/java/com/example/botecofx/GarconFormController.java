@@ -100,7 +100,7 @@ public class GarconFormController implements Initializable {
             imageView.setImage(SwingFXUtils.toFXImage(bufferedImage, null));
         } else {
             // Use uma imagem padrão caso não haja foto do garçom
-            imageView.setImage(new Image(getClass().getResourceAsStream("/com/example/botecofx/semFoto.png")));
+            imageView.setImage(new Image(getClass().getResourceAsStream("/com/example/botecofx/semFoto2.png")));
         }
     }
 
