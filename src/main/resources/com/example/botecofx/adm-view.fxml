@@ -2,10 +2,12 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.botecofx.AdmController">
    <top>
@@ -25,7 +27,6 @@
               <MenuItem onAction="#onRelListaProdutos" text="_LISTA DE PRODUTOS" />
                   <MenuItem onAction="#onRelListaPreco" text="_LISTA DE PREÇOS" />
                   <MenuItem text="_LISTA DE GARÇONS COM FILTRO PARA CIDADE" />
-                  <MenuItem text="_COMANDA" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="_SISTEMA">
@@ -52,4 +53,19 @@
          </BorderPane.margin>
       </MenuBar>
    </top>
+   <center>
+      <Label BorderPane.alignment="CENTER">
+         <graphic>
+            <Label>
+               <graphic>
+                  <Label style="-fx-background-color: black; -fx-border-radius: 25; -fx-background-radius: 25;" text="BotecoFX" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold Italic" size="51.0" />
+                     </font>
+                  </Label>
+               </graphic>
+            </Label>
+         </graphic>
+      </Label>
+   </center>
 </BorderPane>

@@ -111,13 +111,18 @@ public class GarconDAL implements IDAL<Garcon> {
     @Override
     public List<Garcon> get(String filtro) {
         List<Garcon> garcons = new ArrayList<>();
-        String sql = "SELECT * FROM public.garcon";
+        String sql = "SELECT * FROM garcon";
         if (!filtro.isEmpty()) {
             sql += " WHERE " + filtro;
         }
         sql += " ORDER BY gar_nome";
-
+        System.out.println("SQL Executado: " + sql);
         ResultSet rs = SingletonDB.getConexao().consultar(sql);
+        if (rs == null) {
+            System.out.println("Erro: A consulta retornou um ResultSet nulo. Verifique a conexão com o banco de dados.");
+            return garcons; // Retorna lista vazia se houver erro
+        }
+
         try {
             while (rs.next()) {
                 garcons.add(new Garcon(
@@ -132,7 +137,8 @@ public class GarconDAL implements IDAL<Garcon> {
                         rs.getString("gar_fone")
                 ));
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             System.out.println("Erro ao listar garçons: " + e.getMessage());
         }
         return garcons;

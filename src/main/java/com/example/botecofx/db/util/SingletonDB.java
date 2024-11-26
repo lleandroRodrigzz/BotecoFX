@@ -16,8 +16,9 @@ public class SingletonDB {
 
     public static boolean conectar() {
         conexao = new Conexao();
-        return conexao.conectar("jdbc:postgresql://localhost/",
-                "botecodb", "postgres", "postgres123");
+        boolean conectado = conexao.conectar("jdbc:postgresql://localhost/", "botecodb", "postgres", "postgres123");
+        System.out.println("Conexão com o banco: " + (conectado ? "Sucesso" : "Falha"));
+        return conectado;
     }
 
     public static Conexao getConexao() {

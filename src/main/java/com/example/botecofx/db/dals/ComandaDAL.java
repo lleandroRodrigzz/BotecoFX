@@ -4,6 +4,8 @@ import com.example.botecofx.db.entidades.Comanda;
 import com.example.botecofx.db.util.IDAL;
 import com.example.botecofx.db.util.SingletonDB;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -165,6 +167,31 @@ public class ComandaDAL implements IDAL<Comanda> {
                 comandas.add(comanda);
             }
         }catch (Exception e){e.printStackTrace();}
+        return comandas;
+    }
+
+    public List<Comanda> buscarComandasEmAberto() {
+        List<Comanda> comandas = new ArrayList<>();
+        String sql = "SELECT * FROM comanda WHERE com_status = 'A'"; // Ajuste a consulta conforme necessário
+
+        try (Connection connection = SingletonDB.getConexao().getConnect();
+             PreparedStatement stmt = connection.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Comanda comanda = new Comanda();
+                comanda.setId(rs.getInt("com_id"));
+                comanda.setNumero(rs.getInt("com_numero"));
+                comanda.setDescricao(rs.getString("com_desc"));
+                comanda.setData(rs.getDate("com_data").toLocalDate());
+                comanda.setValor(rs.getDouble("com_valor"));
+                comanda.setStatus(rs.getString("com_status").charAt(0));
+                comandas.add(comanda);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return comandas;
     }
 }
