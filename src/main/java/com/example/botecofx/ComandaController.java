@@ -32,7 +32,7 @@ public class ComandaController {
         id = comanda.getId();
         lbNumComanda.setText(""+id);
         // Atualizar o valor
-        lbValor.setText("" + (comanda.getValor() - new ComandaFormController().valorPago));
+        lbValor.setText("" + (comanda.getValor()));
     }
 
     public void onNovaComanda(MouseEvent mouseEvent) throws Exception{
